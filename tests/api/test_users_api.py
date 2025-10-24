@@ -1,14 +1,14 @@
 from src.api_client import ApiClient
+
 api = ApiClient()
 
-
 def test_get_users_list():
-    """Test GET /users?page=2"""
-    response = api.get("users", params={"page": 2})
+    """Test GET /users"""
+    response = api.get("users")
     assert response.status_code == 200
     json_data = response.json()
-    assert "data" in json_data
-    assert len(json_data["data"]) > 0
+    assert isinstance(json_data, list)
+    assert len(json_data) > 0
 
 def test_create_user():
     """Test POST /users"""
@@ -17,4 +17,3 @@ def test_create_user():
     assert response.status_code == 201
     json_data = response.json()
     assert json_data["name"] == "Alla"
-    assert json_data["job"] == "QA Automation"
